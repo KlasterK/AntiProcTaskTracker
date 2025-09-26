@@ -24,9 +24,6 @@ public:
 public:
     TaskItem() = default;
 
-    inline TaskItem(const QString &brief)
-        : m_brief(brief) {}
-
     inline QString brief() const
     {
         return m_brief;
@@ -47,7 +44,18 @@ public:
         m_type = newType;
     }
 
+    inline QTime time() const
+    {
+        return m_time;
+    }
+
+    inline void setTime(const QTime& newTime)
+    {
+        m_time = newTime;
+    }
+
 private:
     QString m_brief;
-    Type m_type;
+    Type m_type = Work;
+    QTime m_time{0, 0, 0};
 };

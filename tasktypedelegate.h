@@ -53,9 +53,4 @@ public:
         int taskType = combobox->currentData().toInt();
         model->setData(index, taskType, Qt::EditRole);
     }
-
-    inline void updateEditorGeometry(QWidget *editor, const QStyleOptionViewItem &option, const QModelIndex &index) const override
-    {
-        editor->setGeometry(option.rect);
-    }
 };

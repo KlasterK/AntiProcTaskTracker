@@ -1,6 +1,7 @@
 #include "mainwindow.h"
 #include "./ui_mainwindow.h"
 #include "tasktypedelegate.h"
+#include "tasktimedelegate.h"
 
 #include <QShortcut>
 
@@ -12,6 +13,7 @@ MainWindow::MainWindow(QWidget *parent)
 
     ui->tableTasks->setModel(&m_taskModel);
     ui->tableTasks->setItemDelegateForColumn(TaskModel::Type, new TaskTypeDelegate(this));
+    ui->tableTasks->setItemDelegateForColumn(TaskModel::Time, new TaskTimeDelegate(this));
 
     QShortcut *deleteShortcut = new QShortcut(QKeySequence::Delete, ui->tableTasks);
     connect(deleteShortcut, &QShortcut::activated, this, &MainWindow::deleteTask);

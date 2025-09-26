@@ -11,7 +11,7 @@ class TaskModel : public QAbstractTableModel
     Q_OBJECT
 
 public:
-    enum Columns { Brief = 0, Type, COLUMNS_COUNT };
+    enum Columns { Brief = 0, Type, Time, COLUMNS_COUNT };
 
 private:
     QList<TaskItem> m_tasks;
@@ -48,7 +48,7 @@ public:
             }
         }
 
-        auto task = m_tasks[index.row()];
+        TaskItem task = m_tasks[index.row()];
         switch(index.column())
         {
         case Brief:
@@ -64,14 +64,19 @@ public:
             switch(role)
             {
             case Qt::DisplayRole:
-                {
-                    auto str = TaskItem::typeToString(task.type());
-                    return tr(str);
-                }
+                return tr(TaskItem::typeToString(task.type()));
             case Qt::EditRole: // data for delegate
                 return task.type();
             default:
                 return QVariant();
+            }
+        case Time:
+            switch(role)
+            {
+            case Qt::DisplayRole:
+                return task.time().toString("mm:ss");
+            case Qt::EditRole:
+                return task.time();
             }
         default:
             return QVariant();
@@ -99,6 +104,10 @@ public:
             item.setType(static_cast<TaskItem::Type>(value.toInt()));
             emit dataChanged(index, index);
             return true;
+        case Time:
+            item.setTime(value.toTime());
+            emit dataChanged(index, index);
+            return true;
         default:
             return false;
         }
@@ -115,6 +124,8 @@ public:
             return "Brief";
         case Type:
             return "Type";
+        case Time:
+            return "Time";
         default:
             return QVariant();
         }
