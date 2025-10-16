@@ -1,4 +1,5 @@
-#pragma once
+#ifndef TASKTYPEDELEGATE_H
+#define TASKTYPEDELEGATE_H
 
 #include "taskitem.h"
 
@@ -54,3 +55,5 @@ public:
         model->setData(index, taskType, Qt::EditRole);
     }
 };
+
+#endif // TASKTYPEDELEGATE_H

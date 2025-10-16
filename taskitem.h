@@ -1,4 +1,5 @@
-#pragma once
+#ifndef TASKITEM_H
+#define TASKITEM_H
 
 #include <QString>
 #include <QTime>
@@ -59,3 +60,5 @@ private:
     Type m_type = Work;
     QTime m_time{0, 0, 0};
 };
+
+#endif // TASKITEM_H

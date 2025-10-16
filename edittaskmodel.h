@@ -1,4 +1,5 @@
-#pragma once
+#ifndef EDITTASKMODEL_H
+#define EDITTASKMODEL_H
 
 #include "taskitem.h"
 
@@ -171,3 +172,5 @@ public:
         return m_tasks[row];
     }
 };
+
+#endif // EDITTASKMODEL_H

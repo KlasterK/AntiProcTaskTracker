@@ -1,4 +1,5 @@
-#pragma once
+#ifndef TASKTIMEDELEGATE_H
+#define TASKTIMEDELEGATE_H
 
 #include "taskitem.h"
 
@@ -26,3 +27,5 @@ public:
         return edit;
     }
 };
+
+#endif // TASKTIMEDELEGATE_H

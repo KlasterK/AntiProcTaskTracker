@@ -1,4 +1,5 @@
-#pragma once
+#ifndef MAINWINDOW_H
+#define MAINWINDOW_H
 
 #include "taskitem.h"
 #include "edittaskmodel.h"
@@ -27,3 +28,5 @@ private:
 public slots:
     void deleteTask();
 };
+
+#endif // MAINWINDOW_H
