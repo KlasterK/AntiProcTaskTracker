@@ -1,6 +1,7 @@
 #pragma once
 
-#include "taskmodel.h"
+#include "taskitem.h"
+#include "edittaskmodel.h"
 
 #include <QMainWindow>
 
@@ -20,7 +21,8 @@ public:
 
 private:
     Ui::MainWindow *ui;
-    TaskModel m_taskModel{};
+    QList<TaskItem> m_tasks;
+    EditTaskModel m_editTaskModel{m_tasks};
 
 public slots:
     void deleteTask();

@@ -6,15 +6,18 @@
 #include <QList>
 #include <QVariant>
 
-class TaskModel : public QAbstractTableModel
+class EditTaskModel : public QAbstractTableModel
 {
     Q_OBJECT
 
 public:
     enum Columns { Brief = 0, Type, Time, COLUMNS_COUNT };
 
+    explicit EditTaskModel(QList<TaskItem> &tasks) : m_tasks(tasks)
+    {}
+
 private:
-    QList<TaskItem> m_tasks;
+    QList<TaskItem> &m_tasks;
 
 public:
     inline int rowCount(const QModelIndex &parent) const override

@@ -11,9 +11,9 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this);
 
-    ui->tableTasks->setModel(&m_taskModel);
-    ui->tableTasks->setItemDelegateForColumn(TaskModel::Type, new TaskTypeDelegate(this));
-    ui->tableTasks->setItemDelegateForColumn(TaskModel::Time, new TaskTimeDelegate(this));
+    ui->tableTasks->setModel(&m_editTaskModel);
+    ui->tableTasks->setItemDelegateForColumn(EditTaskModel::Type, new TaskTypeDelegate(this));
+    ui->tableTasks->setItemDelegateForColumn(EditTaskModel::Time, new TaskTimeDelegate(this));
 
     QShortcut *deleteShortcut = new QShortcut(QKeySequence::Delete, ui->tableTasks);
     connect(deleteShortcut, &QShortcut::activated, this, &MainWindow::deleteTask);
@@ -30,6 +30,6 @@ void MainWindow::deleteTask()
     auto selectedRows = selectionModel->selectedRows();
     for(const auto &index : selectedRows)
     {
-        m_taskModel.removeRow(index.row());
+        m_editTaskModel.removeRow(index.row());
     }
 }
