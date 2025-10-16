@@ -22,6 +22,7 @@ set(PROJECT_SOURCES
         tasktypedelegate.h
         tasktimedelegate.h
         edittaskmodel.cpp
+        tasktypedelegate.cpp
 )
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
