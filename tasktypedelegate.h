@@ -6,6 +6,8 @@
 
 class TaskTypeDelegate : public QStyledItemDelegate
 {
+    Q_OBJECT
+
 public:
     inline explicit TaskTypeDelegate(QObject *parent = nullptr)
         : QStyledItemDelegate(parent) {}
