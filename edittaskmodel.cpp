@@ -106,11 +106,11 @@ QVariant EditTaskModel::headerData(int section, Qt::Orientation orientation, int
     switch(section)
     {
     case Brief:
-        return "Brief";
+        return tr("Brief");
     case Type:
-        return "Type";
+        return tr("Type");
     case Time:
-        return "Time";
+        return tr("Time");
     default:
         return QVariant();
     }
