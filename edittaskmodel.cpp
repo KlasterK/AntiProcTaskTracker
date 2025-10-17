@@ -73,9 +73,9 @@ bool EditTaskModel::setData(const QModelIndex &index, const QVariant &value, int
 
     if(index.row() == m_tasks.length()) // <new> task
     {
-        beginInsertRows(QModelIndex(), m_tasks.size(), m_tasks.size());
+        emit beginInsertRows(QModelIndex(), m_tasks.size(), m_tasks.size());
         m_tasks.append(TaskItem{});
-        endInsertRows();
+        emit endInsertRows();
     }
 
     TaskItem &item = m_tasks[index.row()];

@@ -5,6 +5,7 @@
 #include "edittaskmodel.h"
 
 #include <QMainWindow>
+#include <memory>
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -21,7 +22,7 @@ public:
     ~MainWindow();
 
 private:
-    Ui::MainWindow *ui;
+    std::unique_ptr<Ui::MainWindow> m_ui;
     QList<TaskItem> m_tasks;
     EditTaskModel m_editTaskModel{m_tasks};
 
