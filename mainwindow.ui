@@ -47,7 +47,7 @@
   </widget>
   <action name="actionStartCountdown">
    <property name="text">
-    <string>&amp;Start Countdown</string>
+    <string>&amp;Switch Mode</string>
    </property>
    <property name="shortcut">
     <string>Alt+Return</string>

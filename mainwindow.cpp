@@ -3,37 +3,66 @@
 #include "tasktypedelegate.h"
 #include "tasktimedelegate.h"
 
+#include <QMessageBox>
 #include <QShortcut>
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , m_ui(std::make_unique<Ui::MainWindow>())
+    , m_currentModel(std::in_place_type<EditTaskModel>, m_tasks)
 {
     m_ui->setupUi(this);
 
-    m_ui->tableTasks->setModel(&m_editTaskModel);
+    m_ui->tableTasks->setModel(&std::get<EditTaskModel>(m_currentModel));
     m_ui->tableTasks->setItemDelegateForColumn(EditTaskModel::Type, new TaskTypeDelegate(this));
     m_ui->tableTasks->setItemDelegateForColumn(EditTaskModel::Time, new TaskTimeDelegate(this));
 
-    connect(m_ui->actionAddTask, &QAction::triggered, this, [this]
-    {
-        int last_row = m_editTaskModel.rowCount(QModelIndex()) - 1;
-        auto idx = m_editTaskModel.index(last_row, EditTaskModel::Brief);
-        m_ui->tableTasks->edit(idx);
-    });
+    connect(m_ui->actionAddTask, &QAction::triggered, this, &MainWindow::addTask);
     connect(m_ui->actionRemoveTasks, &QAction::triggered, this, &MainWindow::deleteTask);
+    connect(m_ui->actionStartCountdown, &QAction::triggered, this, &MainWindow::switchMode);
     connect(m_ui->actionQuit, &QAction::triggered, this, &MainWindow::deleteLater);
 }
 
 MainWindow::~MainWindow()
 {}
 
+void MainWindow::addTask()
+{
+    if(!std::holds_alternative<EditTaskModel>(m_currentModel))
+        return;
+    const auto &model = std::get<EditTaskModel>(m_currentModel);
+
+    int last_row = model.rowCount(QModelIndex()) - 1;
+    auto idx = model.index(last_row, EditTaskModel::Brief);
+    m_ui->tableTasks->edit(idx);
+}
+
 void MainWindow::deleteTask()
 {
+    if(!std::holds_alternative<EditTaskModel>(m_currentModel))
+        return;
+    auto &model = std::get<EditTaskModel>(m_currentModel);
+
     auto selectionModel = m_ui->tableTasks->selectionModel();
     auto selectedRows = selectionModel->selectedRows();
     for(const auto &index : selectedRows)
     {
-        m_editTaskModel.removeRow(index.row());
+        model.removeRow(index.row());
+    }
+}
+
+void MainWindow::switchMode()
+{
+    if(std::holds_alternative<EditTaskModel>(m_currentModel))
+    {
+        m_currentModel.emplace<CountingTaskModel>(m_tasks);
+        auto &model = std::get<CountingTaskModel>(m_currentModel);
+        m_ui->tableTasks->setModel(&model);
+    }
+    else if(std::holds_alternative<CountingTaskModel>(m_currentModel))
+    {
+        m_currentModel.emplace<EditTaskModel>(m_tasks);
+        auto &model = std::get<EditTaskModel>(m_currentModel);
+        m_ui->tableTasks->setModel(&model);
     }
 }

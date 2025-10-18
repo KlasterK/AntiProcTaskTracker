@@ -3,6 +3,7 @@
 
 #include "taskitem.h"
 #include "edittaskmodel.h"
+#include "countingtaskmodel.h"
 
 #include <QMainWindow>
 #include <memory>
@@ -24,10 +25,12 @@ public:
 private:
     std::unique_ptr<Ui::MainWindow> m_ui;
     QList<TaskItem> m_tasks;
-    EditTaskModel m_editTaskModel{m_tasks};
+    std::variant<EditTaskModel, CountingTaskModel> m_currentModel;
 
-public slots:
+private slots:
+    void addTask();
     void deleteTask();
+    void switchMode();
 };
 
 #endif // MAINWINDOW_H

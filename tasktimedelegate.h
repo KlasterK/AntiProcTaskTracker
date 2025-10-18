@@ -13,7 +13,7 @@ class TaskTimeDelegate : public QStyledItemDelegate
     Q_OBJECT
 
 public:
-    explicit TaskTimeDelegate(QObject *parent = nullptr)
+    inline explicit TaskTimeDelegate(QObject *parent = nullptr)
         : QStyledItemDelegate(parent)
     {}
 
