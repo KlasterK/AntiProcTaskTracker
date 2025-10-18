@@ -69,22 +69,7 @@ void CountingTaskModel::taskTimerTimeout()
     if(newTime > m_tasks[0].time())
     {
         // Time wrapped back = time ended
-        const char *msgBody = nullptr;
-        switch(m_tasks[0].type())
-        {
-        case TaskItem::Work:
-            msgBody = "Work session '%1' is finished.";
-            break;
-        case TaskItem::Rest:
-            msgBody = "Break time for '%1' is over.";
-            break;
-        }
-
-        QMessageBox::information(
-            nullptr,
-            tr("Time's up!"),
-            tr(msgBody).arg(m_tasks[0].brief())
-        );
+        emit taskFinished(m_tasks[0]);
 
         emit beginRemoveRows(QModelIndex(), 0, 0);
         m_tasks.pop_front();
@@ -93,7 +78,7 @@ void CountingTaskModel::taskTimerTimeout()
         if(m_tasks.isEmpty())
         {
             // No more tasks left
-            QMessageBox::information(nullptr, tr("Tracker"), tr("Task list is over!"));
+            emit taskListEmptied();
             m_taskTimer->stop();
         }
 

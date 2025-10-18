@@ -31,6 +31,9 @@ private slots:
     void addTask();
     void deleteTask();
     void switchMode();
+
+    void notifyTaskFinished(const TaskItem &task);
+    void notifyTaskListEmptied();
 };
 
 #endif // MAINWINDOW_H

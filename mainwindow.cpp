@@ -58,6 +58,8 @@ void MainWindow::switchMode()
         m_currentModel.emplace<CountingTaskModel>(m_tasks);
         auto &model = std::get<CountingTaskModel>(m_currentModel);
         m_ui->tableTasks->setModel(&model);
+        connect(&model, &CountingTaskModel::taskFinished, this, &MainWindow::notifyTaskFinished);
+        connect(&model, &CountingTaskModel::taskListEmptied, this, &MainWindow::notifyTaskListEmptied);
     }
     else if(std::holds_alternative<CountingTaskModel>(m_currentModel))
     {
@@ -65,4 +67,33 @@ void MainWindow::switchMode()
         auto &model = std::get<EditTaskModel>(m_currentModel);
         m_ui->tableTasks->setModel(&model);
     }
+}
+
+void MainWindow::notifyTaskFinished(const TaskItem &task)
+{
+    const char *msgBody = nullptr;
+    switch(task.type())
+    {
+    case TaskItem::Work:
+        msgBody = "Work session '%1' is finished.";
+        break;
+    case TaskItem::Rest:
+        msgBody = "Break time for '%1' is over.";
+        break;
+    }
+
+    QMessageBox::information(
+        this,
+        tr("Time's up!"),
+        tr(msgBody).arg(task.brief())
+    );
+}
+
+void MainWindow::notifyTaskListEmptied()
+{
+    QMessageBox::information(
+        this,
+        tr("Tracker"),
+        tr("Task list is over!")
+    );
 }

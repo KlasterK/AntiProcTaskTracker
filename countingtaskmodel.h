@@ -25,6 +25,10 @@ public:
 
     QVariant headerData(int section, Qt::Orientation orientation, int role) const override;
 
+signals:
+    void taskFinished(const TaskItem &task);
+    void taskListEmptied();
+
 private:
     QList<TaskItem> &m_tasks;
     QTimer *m_taskTimer = new QTimer(this);
