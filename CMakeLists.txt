@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.16)
 
-project(TimeTracker VERSION 0.1 LANGUAGES CXX)
+project(tracker VERSION 0.1 LANGUAGES CXX)
 
 set(CMAKE_AUTOUIC ON)
 set(CMAKE_AUTOMOC ON)
@@ -13,52 +13,34 @@ find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Widgets)
 find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets)
 
 set(PROJECT_SOURCES
-        main.cpp
-        mainwindow.cpp
-        mainwindow.h
-        mainwindow.ui
-        taskitem.h
-        edittaskmodel.h
-        tasktypedelegate.h
-        tasktimedelegate.h
-        edittaskmodel.cpp
-        tasktypedelegate.cpp
-        countingtaskmodel.h
-        countingtaskmodel.cpp
+    main.cpp
+    mainwindow.cpp
+    mainwindow.h
+    mainwindow.ui
+    taskitem.h
+    edittaskmodel.h
+    tasktypedelegate.h
+    tasktimedelegate.h
+    edittaskmodel.cpp
+    tasktypedelegate.cpp
+    countingtaskmodel.h
+    countingtaskmodel.cpp
 )
 
-if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
-    qt_add_executable(TimeTracker
-        MANUAL_FINALIZATION
-        ${PROJECT_SOURCES}
-    )
-# Define target properties for Android with Qt 6 as:
-#    set_property(TARGET TimeTracker APPEND PROPERTY QT_ANDROID_PACKAGE_SOURCE_DIR
-#                 ${CMAKE_CURRENT_SOURCE_DIR}/android)
-# For more information, see https://doc.qt.io/qt-6/qt-add-executable.html#target-creation
-else()
-    if(ANDROID)
-        add_library(TimeTracker SHARED
-            ${PROJECT_SOURCES}
-        )
-# Define properties for Android with Qt 5 after find_package() calls as:
-#    set(ANDROID_PACKAGE_SOURCE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/android")
-    else()
-        add_executable(TimeTracker
-            ${PROJECT_SOURCES}
-        )
-    endif()
-endif()
+qt_add_executable(tracker
+    MANUAL_FINALIZATION
+    ${PROJECT_SOURCES}
+)
 
-target_link_libraries(TimeTracker PRIVATE Qt${QT_VERSION_MAJOR}::Widgets)
+qt_add_resources(tracker "images"
+    PREFIX "/"
+    FILES
+        images/main_icon.png
+)
 
-# Qt for iOS sets MACOSX_BUNDLE_GUI_IDENTIFIER automatically since Qt 6.1.
-# If you are developing for iOS or macOS you should consider setting an
-# explicit, fixed bundle identifier manually though.
-if(${QT_VERSION} VERSION_LESS 6.1.0)
-  set(BUNDLE_ID_OPTION MACOSX_BUNDLE_GUI_IDENTIFIER com.example.TimeTracker)
-endif()
-set_target_properties(TimeTracker PROPERTIES
+target_link_libraries(tracker PRIVATE Qt${QT_VERSION_MAJOR}::Widgets)
+
+set_target_properties(tracker PROPERTIES
     ${BUNDLE_ID_OPTION}
     MACOSX_BUNDLE_BUNDLE_VERSION ${PROJECT_VERSION}
     MACOSX_BUNDLE_SHORT_VERSION_STRING ${PROJECT_VERSION_MAJOR}.${PROJECT_VERSION_MINOR}
@@ -67,12 +49,10 @@ set_target_properties(TimeTracker PROPERTIES
 )
 
 include(GNUInstallDirs)
-install(TARGETS TimeTracker
+install(TARGETS tracker
     BUNDLE DESTINATION .
     LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
     RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
 )
 
-if(QT_VERSION_MAJOR EQUAL 6)
-    qt_finalize_executable(TimeTracker)
-endif()
+qt_finalize_executable(tracker)

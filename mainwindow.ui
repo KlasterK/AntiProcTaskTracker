@@ -13,6 +13,10 @@
   <property name="windowTitle">
    <string>AntiProcTaskTracker</string>
   </property>
+  <property name="windowIcon">
+   <iconset resource="build/Desktop_Qt_shared_MinGW_w64_MINGW64_MSYS2-Debug/.qt/rcc/images.qrc">
+    <normaloff>:/images/main_icon.png</normaloff>:/images/main_icon.png</iconset>
+  </property>
   <widget class="QWidget" name="centralwidget">
    <layout class="QVBoxLayout" name="verticalLayout">
     <item>
@@ -75,6 +79,8 @@
    </property>
   </action>
  </widget>
- <resources/>
+ <resources>
+  <include location="build/Desktop_Qt_shared_MinGW_w64_MINGW64_MSYS2-Debug/.qt/rcc/images.qrc"/>
+ </resources>
  <connections/>
 </ui>
