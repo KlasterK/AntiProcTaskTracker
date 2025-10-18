@@ -71,29 +71,24 @@ void MainWindow::switchMode()
 
 void MainWindow::notifyTaskFinished(const TaskItem &task)
 {
-    const char *msgBody = nullptr;
+    const char *fmt = nullptr;
     switch(task.type())
     {
     case TaskItem::Work:
-        msgBody = "Work session '%1' is finished.";
+        fmt = "Work session '%1' is finished.";
         break;
     case TaskItem::Rest:
-        msgBody = "Break time for '%1' is over.";
+        fmt = "Break time for '%1' is over.";
         break;
     }
 
-    QMessageBox::information(
-        this,
-        tr("Time's up!"),
-        tr(msgBody).arg(task.brief())
-    );
+    auto title = tr("Time's up!");
+    auto text = tr(fmt).arg(task.brief());
+
+    QMessageBox::information(this, title, text);
 }
 
 void MainWindow::notifyTaskListEmptied()
 {
-    QMessageBox::information(
-        this,
-        tr("Tracker"),
-        tr("Task list is over!")
-    );
+    QMessageBox::information(this, tr("Tracker"), tr("Task list is over!"));
 }

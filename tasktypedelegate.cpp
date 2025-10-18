@@ -4,8 +4,8 @@
 QWidget* TaskTypeDelegate::createEditor(QWidget *parent, const QStyleOptionViewItem &option, const QModelIndex &index) const
 {
     auto *combobox = new QComboBox(parent);
-    combobox->addItem("Work", TaskItem::Work);
-    combobox->addItem("Rest", TaskItem::Rest);
+    combobox->addItem(tr("Work"), TaskItem::Work);
+    combobox->addItem(tr("Rest"), TaskItem::Rest);
     combobox->setEditable(false);
     return combobox;
 }

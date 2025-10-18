@@ -33,7 +33,7 @@ QVariant CountingTaskModel::data(const QModelIndex &index, int role) const
     case Type:
         return tr(TaskItem::typeToString(task.type()));
     case Time:
-            return task.time().toString("mm:ss");
+        return task.time().toString("mm:ss");
     default:
         return QVariant();
     }
